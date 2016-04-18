@@ -1,5 +1,7 @@
 package model;
 
+import view.RenderInstructions;
+
 public class Obstacle {
 	
 	private ObsType type;
@@ -7,14 +9,37 @@ public class Obstacle {
 	private Direction direction;
 	private Position position;
 	private long timeCreated;
-
+	private double renderWidth;
+	private double renderHeight;
+	
 	public Obstacle(ObsType type, Position pos, Direction dir){
 		this.type = type;
 		velocity = 1;
 		direction = dir;
 		position = pos;
+		renderWidth = 10;
+		renderHeight = 10;
 		timeCreated = System.nanoTime();
 	}
+	
+	public RenderInstructions getRenderInstuctions(){
+		if(type == ObsType.INVASIVE_ANIMAL){
+			return new RenderInstructions(position.getX(), position.getY(), "res/enemy1.png", renderWidth, renderHeight);
+		}
+		return null;
+	}
+	
+	public void move(){
+		if(direction == Direction.EAST){
+			position.addX((int)velocity);
+		}
+		else if(direction == Direction.WEST){
+			position.addX((int) (-1 * velocity));
+		}
+	}
+	
+	
+	
 	
 	public void onDestory() {
 
@@ -58,6 +83,13 @@ public class Obstacle {
 
 	public void setTimeCreated(long timeCreated) {
 		this.timeCreated = timeCreated;
+	}
+	public double getRenderWidth() {
+		return renderWidth;
+	}
+
+	public double getRenderHeight() {
+		return renderHeight;
 	}
 
 }

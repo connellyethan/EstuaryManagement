@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFrame;
 
+import misc.Preferences;
 import misc.Utilities;
 import model.GameState;
+import screens.Controller;
+import screens.EndGameScreen;
+import screens.MainGameScreen;
 import screens.MenuScreen;
-import screens.Screen;
 import view.PreAlphaView;
 
 public class PreAlphaMain {
@@ -18,7 +21,7 @@ public class PreAlphaMain {
 	static PreAlphaView view;
 	static JFrame frame;
 	static GameState state;
-	static Screen currentScreen;
+	static Controller currentScreen;
 	static PreAlphaMain game;
 	private long lastTime, now;
 	private final double ticksPerSecond = 60.0;
@@ -35,7 +38,9 @@ public class PreAlphaMain {
 		view = new PreAlphaView();
 		DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 		// view.setPreferredSize(new Dimension(dm.getWidth(), dm.getHeight()));
-		view.setPreferredSize(new Dimension(900, 600));
+		Preferences.setWINDOW_HEIGHT(200);
+		Preferences.setWINDOW_WIDTH(900);
+		view.setPreferredSize(new Dimension(Preferences.getWINDOW_WIDTH(), Preferences.getWINDOW_HEIGHT()));
 		Utilities.setWindowHeight(view.getPreferredSize().getHeight(), view.getPreferredSize().getWidth());
 
 		switchStates(GameState.MENU);
@@ -75,7 +80,7 @@ public class PreAlphaMain {
 		while (running) {
 			now = System.nanoTime();
 			deltaNs += (now - lastTime);
-			System.out.println(sum/count);
+			//System.out.println(sum/count);
 			sum+=now - lastTime;
 			count++;
 			lastTime = now;
@@ -92,7 +97,7 @@ public class PreAlphaMain {
 			menuTick();
 		} 
 		else if (state == GameState.IN_GAME) {
-
+			gameTick();
 		} 
 		else if (state == GameState.END_SCREEN) {
 
@@ -100,8 +105,13 @@ public class PreAlphaMain {
 	}
 
 	private void menuTick() {
-		// TODO Auto-generated method stub
-		// None?
+		if(currentScreen.shouldSwitchScreen()){
+			switchStates(GameState.IN_GAME);
+		}
+	}
+	
+	private void gameTick(){
+		currentScreen.onTick();
 	}
 
 	public void drawScreen() {
@@ -109,6 +119,7 @@ public class PreAlphaMain {
 	}
 	
 	public void switchStates(GameState newState){
+		System.out.println("SWITCHING STATES");
 		if(view.getMouseListeners().length > 0){
 			view.removeMouseListener(currentScreen);
 		}
@@ -122,13 +133,14 @@ public class PreAlphaMain {
 			currentScreen = new MenuScreen(); // Sets default screen
 		}
 		else if (newState == GameState.IN_GAME) {
-
+			currentScreen = new MainGameScreen();
 		} 
 		else if (newState == GameState.END_SCREEN) {
-
+			currentScreen = new EndGameScreen();
 		}
 		
 		view.addMouseListener(currentScreen);
 		view.addMouseMotionListener(currentScreen);
 	}
+
 }

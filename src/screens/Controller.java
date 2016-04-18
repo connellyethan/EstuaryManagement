@@ -13,14 +13,14 @@ import view.RenderInstructions;
 public abstract class Controller implements Renderable, Tickable, MouseListener, MouseMotionListener {
 
 	public String backgroundPath;
-	
+	protected boolean switchScreen = false;
 	
 	public abstract void onTick();
 	
 	public abstract void initialize();
 	
 	
-	public abstract ArrayList<RenderInstructions> render();
+	public abstract ArrayList<RenderInstructions> getRenderInstuctions();
 	public abstract void mouseDragged(MouseEvent e);
 	public abstract void mouseMoved(MouseEvent e);
 	public abstract void mouseClicked(MouseEvent e);
@@ -28,6 +28,9 @@ public abstract class Controller implements Renderable, Tickable, MouseListener,
 	public abstract void mouseExited(MouseEvent e);
 	public abstract void mousePressed(MouseEvent e);
 	public abstract void mouseReleased(MouseEvent e);
+	public boolean shouldSwitchScreen(){
+		return switchScreen;
+	}
 	
 	
 	
