@@ -26,6 +26,12 @@ public class Position {
 		this.y = yPos;
 	}
 	
+	public void addX(int delta){
+		this.x += delta;
+	}
+	public void addY(int delta){
+		this.y += delta;
+	}
 	
 
 }
