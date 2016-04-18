@@ -38,7 +38,7 @@ public class PreAlphaMain {
 		view = new PreAlphaView();
 		DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 		// view.setPreferredSize(new Dimension(dm.getWidth(), dm.getHeight()));
-		Preferences.setWINDOW_HEIGHT(200);
+		Preferences.setWINDOW_HEIGHT(900);
 		Preferences.setWINDOW_WIDTH(900);
 		view.setPreferredSize(new Dimension(Preferences.getWINDOW_WIDTH(), Preferences.getWINDOW_HEIGHT()));
 		Utilities.setWindowHeight(view.getPreferredSize().getHeight(), view.getPreferredSize().getWidth());
