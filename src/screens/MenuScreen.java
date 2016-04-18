@@ -16,7 +16,7 @@ import view.RenderInstructions;
  * MenuScreen models the menuScreen of the game
  * @author Matts
  * */
-public class MenuScreen extends Controller{
+public class MenuScreen extends Screen{
 	private BufferedImage background;
 	boolean flag;
 	public boolean isOverStart;
@@ -74,19 +74,17 @@ public class MenuScreen extends Controller{
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
 		if(Utilities.isInBox(e,startButtonBounds)){
 			flag = true;
 		}
 		else{
 			flag = false;
 		}
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

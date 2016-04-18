@@ -52,12 +52,12 @@ public class Obstacle {
 		this.position = position;
 	}
 
-	public State getState() {
-		return state;
+	public long getTimeCreated() {
+		return timeCreated;
 	}
 
-	public void setState(State state) {
-		this.state = state;
+	public void setTimeCreated(long timeCreated) {
+		this.timeCreated = timeCreated;
 	}
 
 }

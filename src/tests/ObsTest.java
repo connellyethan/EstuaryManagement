@@ -7,6 +7,7 @@ import org.junit.Test;
 import model.Direction;
 import model.ObsType;
 import model.Obstacle;
+import model.Position;
 
 public class ObsTest {
 

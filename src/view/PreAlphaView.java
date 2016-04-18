@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import misc.Renderable;
-import screens.Controller;
+import screens.Screen;
 
 public class PreAlphaView extends Canvas {
 
@@ -25,7 +25,7 @@ public class PreAlphaView extends Canvas {
 		
 	}
 	
-	public void render(Controller currentScreen) {
+	public void render(Screen currentScreen) {
 		windowHeight = getPreferredSize().getHeight();
 		windowWidth = getPreferredSize().getWidth();
 		bs = this.getBufferStrategy(); //creates triple buffer
