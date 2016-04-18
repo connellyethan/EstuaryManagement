@@ -6,32 +6,19 @@ public class Obstacle {
 	private double velocity;
 	private Direction direction;
 	private Position position;
-	private Time timeCreated;
-	private State state;
+	private long timeCreated;
 
-	public Obstacle(Type type, Position pos, Direction dir){
+	public Obstacle(ObsType type, Position pos, Direction dir){
 		this.type = type;
 		velocity = 1;
 		direction = dir;
 		position = pos;
-		timeCreated = time.now();
-		state = null;
-		
+		timeCreated = System.nanoTime();
 	}
 	
-	public void onTick() {
-		Move();
-	}
-
-	public void Move() {
-		position.setX(position.getX() + velocity);
-		position.setY(position.getY() + velocity);
-	}
-
 	public void onDestory() {
 
 	}
-	
 
 	public ObsType getType() {
 		return type;
@@ -63,14 +50,6 @@ public class Obstacle {
 
 	public void setPosition(Position position) {
 		this.position = position;
-	}
-
-	public Time getTimeCreated() {
-		return timeCreated;
-	}
-
-	public void setTimeCreated(Time timeCreated) {
-		this.timeCreated = timeCreated;
 	}
 
 	public State getState() {
