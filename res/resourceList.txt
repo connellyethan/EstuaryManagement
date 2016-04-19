@@ -1,3 +1,0 @@
-res/menuScreen.png
-res/background.png
-res/startButton.png
