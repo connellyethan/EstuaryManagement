@@ -1,10 +1,10 @@
 package model;
+//import static org.junit.Assert.*;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+//import org.junit.Test;
 
 public class ModelTests {
+	/*
 
 	@Test
 	public void trashcanTest(){
@@ -31,6 +31,7 @@ public class ModelTests {
 		Tool researcher = new Tool((new Position(0, 0)), ToolType.RESEARCHER);
 	}
 	
+	*/
 	
 
 }

@@ -27,11 +27,23 @@ public class Utilities {
 		double x = (int) (((e.getX()/((double)windowWidth))) * 100.0);
 		double y = (int) (((e.getY()/((double)windowHeight))) * 100.0);
 		
-		System.out.println("got: " + x + "," + y);
-		System.out.println("Box: " + rb.getX() + "," + rb.getY() + "-"  + (rb.getX()+rb.getXLength()) + "," + (rb.getY() + rb.getYLength()));
+	//	System.out.println("got: " + x + "," + y);
+		//System.out.println("Box: " + rb.getX() + "," + rb.getY() + "-"  + (rb.getX()+rb.getXLength()) + "," + (rb.getY() + rb.getYLength()));
 		return (x >= rb.getX() && x<=rb.getX()+rb.getXLength() &&
 				y>=rb.getY() && y <=rb.getY() + rb.getYLength());
 	}
+	
+	public static boolean isInBox(int x, int y, RectangleBound rb){
+		//double x = (int) (((e.getX()/((double)windowWidth))) * 100.0);
+		//double y = (int) (((e.getY()/((double)windowHeight))) * 100.0);
+		
+	//	System.out.println("got: " + x + "," + y);
+		//System.out.println("Box: " + rb.getX() + "," + rb.getY() + "-"  + (rb.getX()+rb.getXLength()) + "," + (rb.getY() + rb.getYLength()));
+		return (x >= rb.getX() && x<=rb.getX()+rb.getXLength() &&
+				y>=rb.getY() && y <=rb.getY() + rb.getYLength());
+	}
+	
+	
 	/*
 	
 	/**

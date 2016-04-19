@@ -18,8 +18,11 @@ public class ResourcePool {
 	public void initializeResources(){
 		//TODO initialize resources
 		addResource("res/menuScreen.png");
+		addResource("res/enemy1.png");
 		addResource("res/background.png");
 		addResource("res/startButton.png");
+		addResource("res/endScreen.png");
+		addResource("res/toolbox.png");
 	}
 	
 	private void addResource(String imagePath){
