@@ -1,37 +1,64 @@
 package model;
 
-public class Obstacle {
-	
+import java.util.ArrayList;
+
+import misc.RectangleBound;
+import misc.Renderable;
+import misc.Tickable;
+import view.RenderInstructions;
+
+public class Obstacle implements Renderable, Tickable{
+
 	private ObsType type;
 	private double velocity;
 	private Direction direction;
 	private Position position;
-	private Time timeCreated;
-	private State state;
+	private long timeCreated;
+	private double renderWidth;
+	private double renderHeight;
+	
+	private RectangleBound renderBounds;
+	private RectangleBound hitBoxBounds;
 
-	public Obstacle(Type type, Position pos, Direction dir){
+	public Obstacle(ObsType type, Position pos, Direction dir) {
 		this.type = type;
-		velocity = 1;
+		velocity = .3;
 		direction = dir;
 		position = pos;
-		timeCreated = time.now();
-		state = null;
-		
-	}
-	
-	public void onTick() {
-		Move();
+		renderWidth = 30;
+		renderHeight = 30;
+		timeCreated = System.nanoTime();
 	}
 
-	public void Move() {
-		position.setX(position.getX() + velocity);
-		position.setY(position.getY() + velocity);
+	public ArrayList<RenderInstructions> getRenderInstuctions() {
+		ArrayList<RenderInstructions> renderBatch = new ArrayList<RenderInstructions>();
+		
+		if (type == ObsType.INVASIVE_ANIMAL) {
+			
+			renderBatch.add(new RenderInstructions(position.getX(), position.getY(), "res/enemy1.png", renderWidth,
+					renderHeight));
+		}
+		return renderBatch;
+	}
+
+	public void move() {
+		if (direction == Direction.EAST) {
+			position.addX(velocity);
+		}
+		else if (direction == Direction.WEST) {
+			position.addX(-1 * velocity);
+		}
+		else if (direction == Direction.SOUTH) {
+			position.addX(velocity);
+		}
+		if (direction == Direction.NORTH) {
+			position.addX(-1 * velocity);
+		}
 	}
 
 	public void onDestory() {
 
 	}
-	
 
 	public ObsType getType() {
 		return type;
@@ -65,20 +92,26 @@ public class Obstacle {
 		this.position = position;
 	}
 
-	public Time getTimeCreated() {
+	public long getTimeCreated() {
 		return timeCreated;
 	}
 
-	public void setTimeCreated(Time timeCreated) {
+	public void setTimeCreated(long timeCreated) {
 		this.timeCreated = timeCreated;
 	}
 
-	public State getState() {
-		return state;
+	public double getRenderWidth() {
+		return renderWidth;
 	}
 
-	public void setState(State state) {
-		this.state = state;
+	public double getRenderHeight() {
+		return renderHeight;
+	}
+
+	@Override
+	public void onTick() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

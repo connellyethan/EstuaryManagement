@@ -9,7 +9,9 @@ public class Position {
 		this.x = xPos;
 		this.y = yPos;
 	}
-
+	public static Position getRandom(int width, int height){
+		return new Position((int) Math.random() * width, (int) Math.random() * height);
+	}
 	public double getX() {
 		return x;
 	}
