@@ -9,6 +9,6 @@ import view.RenderInstructions;
  * @author Matts
  * */
 public interface Renderable {
-	public ArrayList<RenderInstructions> getRenderInstuctions();
+	public ArrayList<RenderInstructions> render();
 
 }

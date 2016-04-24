@@ -11,8 +11,6 @@ import java.util.Iterator;
 
 import misc.Renderable;
 import screens.Controller;
-import screens.MainGameScreen;
-import screens.MenuScreen;
 
 public class PreAlphaView extends Canvas {
 
@@ -28,12 +26,6 @@ public class PreAlphaView extends Canvas {
 	}
 	
 	public void render(Controller currentScreen) {
-		/*if(currentScreen instanceof MenuScreen){
-			System.out.println("Rendering menu");
-		}
-		if(currentScreen instanceof MainGameScreen){
-			System.out.println("Rendering game");
-		}*/
 		windowHeight = getPreferredSize().getHeight();
 		windowWidth = getPreferredSize().getWidth();
 		bs = this.getBufferStrategy(); //creates triple buffer
@@ -42,10 +34,9 @@ public class PreAlphaView extends Canvas {
 			return;
 		}
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		
 		////// RENDERING LOOP ///////
-		ArrayList<RenderInstructions> renderBatch = currentScreen.getRenderInstuctions();
+		ArrayList<RenderInstructions> renderBatch = currentScreen.render();
 		for (RenderInstructions currentInstruction : renderBatch) {
 
 			//Sets up values for current render

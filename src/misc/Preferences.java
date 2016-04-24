@@ -8,21 +8,9 @@ public class Preferences {
 
 	private static double aspectRatio = 1366.0 / 768.0;
 	//private static double windowsInPixels
-	private static int WINDOW_HEIGHT;
-	private static int WINDOW_WIDTH;
-	
-	public static int getWINDOW_HEIGHT() {
-		return WINDOW_HEIGHT;
-	}
-	public static void setWINDOW_HEIGHT(int wINDOW_HEIGHT) {
-		WINDOW_HEIGHT = wINDOW_HEIGHT;
-	}
-	public static int getWINDOW_WIDTH() {
-		return WINDOW_WIDTH;
-	}
-	public static void setWINDOW_WIDTH(int wINDOW_WIDTH) {
-		WINDOW_WIDTH = wINDOW_WIDTH;
-	}
-	
+	private static int WINDOW_HEIGHT_UNITS = 1000;
+	private static int WINDOW_WIDTH_UNITS = 1000;
+	private static double WNDOW_WIDTH_SCALE_FACTOR;
+	private static double WNDOW_HEIGHT_SCALE_FACTOR;
 
 }

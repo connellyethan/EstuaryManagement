@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import misc.Preferences;
 import misc.RectangleBound;
 import misc.Utilities;
 import view.RenderInstructions;
@@ -25,7 +24,6 @@ public class MenuScreen extends Controller{
 
 	public MenuScreen(){
 		flag = false;
-		switchScreen = false;
 		loadRes();
 		System.out.println("MENUSCREEN CONSTRUCTOR");
 		
@@ -39,12 +37,17 @@ public class MenuScreen extends Controller{
 	}
 	
 	@Override
-	public ArrayList<RenderInstructions> getRenderInstuctions() {
+	public ArrayList<RenderInstructions> render() {
 		
 		ArrayList<RenderInstructions> renderBatch = new ArrayList<RenderInstructions>();
 		
-		RenderInstructions background = new RenderInstructions(0, 0, "res/menuScreen.png",100,100);
-			
+		RenderInstructions background;
+		if(!flag){
+			background = new RenderInstructions(0, 0, "res/menuScreen.png",100,100);
+		}
+		else{
+			background = new RenderInstructions(0, 0, "res/background.png",100,100);
+		}
 		renderBatch.add(background);
 
 		renderBatch.add(new RenderInstructions(startButtonBounds.getX(), startButtonBounds.getY(), "res/startButton.png", startButtonBounds.getXLength(), startButtonBounds.getYLength()));
@@ -69,26 +72,21 @@ public class MenuScreen extends Controller{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// System.out.println(e.getX() + "," + e.getY());
 		// TODO Auto-generated method stub
+		
+		if(Utilities.isInBox(e,startButtonBounds)){
+			flag = true;
+		}
+		else{
+			flag = false;
+		}
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		double x = e.getX();
-		double y = e.getY();
 		
-		System.out.println("original x: " + x);
-		
-		x = (x/Preferences.getWINDOW_WIDTH()) * 100.0;
-		y = (y/Preferences.getWINDOW_HEIGHT()) * 100.0;
-		
-		System.out.println("edited x: " + x);
-		if(Utilities.isInBox((int) x, (int) y ,startButtonBounds)){
-			switchScreen = true;
-		}
 	}
 
 	@Override
@@ -121,5 +119,5 @@ public class MenuScreen extends Controller{
 		
 	}
 
-	
+
 }
