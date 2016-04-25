@@ -7,7 +7,7 @@ package misc;
 public class Preferences {
 
 	private static double aspectRatio = 1366.0 / 768.0;
-	//private static double windowsInPixels
+	//private static double windowsInPixels;
 	private static int WINDOW_HEIGHT;
 	private static int WINDOW_WIDTH;
 	

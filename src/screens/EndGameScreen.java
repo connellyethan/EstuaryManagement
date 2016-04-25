@@ -8,7 +8,7 @@ import view.RenderInstructions;
 public class EndGameScreen extends Controller {
 
 	@Override
-	public void onTick() {
+	public void onTick(long deltaNs) {
 		// TODO Auto-generated method stub
 
 	}

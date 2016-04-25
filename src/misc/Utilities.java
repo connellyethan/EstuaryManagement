@@ -6,61 +6,71 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import model.ObsType;
+import model.ToolType;
+
 public class Utilities {
-	
+
 	private static double windowWidth = -1;
 	private static double windowHeight = -1;
+	public static final long NANOS_PER_SECOND = 1000000000;
+	
 	
 	public static BufferedImage loadImage(String path, Object host) throws IOException {
-		return ImageIO.read(new File(path) );
-		
-		//return ImageIO.read(host.getClass().getResource(path));
+		return ImageIO.read(new File(path));
+
+		// return ImageIO.read(host.getClass().getResource(path));
 	}
-	
-	public static void setWindowHeight(double height, double width){
+
+	public static void setWindowHeight(double height, double width) {
 		windowHeight = height;
 		windowWidth = width;
 	}
 	
-	 
-	public static boolean isInBox(MouseEvent e, RectangleBound rb){
-		double x = (int) (((e.getX()/((double)windowWidth))) * 100.0);
-		double y = (int) (((e.getY()/((double)windowHeight))) * 100.0);
-		
-	//	System.out.println("got: " + x + "," + y);
-		//System.out.println("Box: " + rb.getX() + "," + rb.getY() + "-"  + (rb.getX()+rb.getXLength()) + "," + (rb.getY() + rb.getYLength()));
-		return (x >= rb.getX() && x<=rb.getX()+rb.getXLength() &&
-				y>=rb.getY() && y <=rb.getY() + rb.getYLength());
+	public static boolean hasCollided(RectangleBound hitbox1, RectangleBound hitbox2){
+		double aLeft = hitbox1.getX1();
+		double aRight = hitbox1.getX2();
+		double aTop = hitbox1.getY1();
+		double aBottom = hitbox1.getY2();
+
+		double bLeft = hitbox2.getX1();
+		double bRight = hitbox2.getX2();
+		double bTop = hitbox2.getY1();
+		double bBottom = hitbox2.getY2();
+
+		return (aLeft < bRight && aRight > bLeft && aTop < bBottom && aBottom > bTop);
 	}
-	
-	public static boolean isInBox(int x, int y, RectangleBound rb){
-		//double x = (int) (((e.getX()/((double)windowWidth))) * 100.0);
-		//double y = (int) (((e.getY()/((double)windowHeight))) * 100.0);
-		
-	//	System.out.println("got: " + x + "," + y);
-		//System.out.println("Box: " + rb.getX() + "," + rb.getY() + "-"  + (rb.getX()+rb.getXLength()) + "," + (rb.getY() + rb.getYLength()));
-		return (x >= rb.getX() && x<=rb.getX()+rb.getXLength() &&
-				y>=rb.getY() && y <=rb.getY() + rb.getYLength());
+
+	public static boolean isInBox(MouseEvent e, RectangleBound rb) {
+		double x = (((e.getX() / ((double) windowWidth))) * 100.0);
+		double y = (((e.getY() / ((double) windowHeight))) * 100.0);
+		return isInBox(x, y, rb);
 	}
-	
-	
-	/*
-	
-	/**
-	 * returns true if the mouse event e is within a certain radius from a point. Scales accordingly
-	 * @param e the mouse event
-	 * @param center the center point
-	 * @param radius the radius
-	 * @return boolean as described
-	 
-	public static boolean isInCircle(MouseEvent e, misc.Point center,double radius){
-		int x = (int) ((e.getX()-CANVAS_WIDTH_UNSCALED/2.0)/SCALE_FACTOR);
-		int y = (int) ((e.getY() - CANVAS_HEIGHT_UNSCALED/2.0)/SCALE_FACTOR);
-		
-		double dx= x-center.x;
-		double dy =y-center.y;
-		
-		return (Math.sqrt(dx*dx+dy*dy)<=radius);
-		
-	}*/
+
+	public static boolean isInBox(double x, double y, RectangleBound rb) {
+		return ((x >= rb.getX1() && x <= rb.getX2()) && (y >= rb.getY1() && y <= rb.getY2()));
+	}
+
+	public static boolean typesAreCompatable(ObsType type2, ToolType type3) {
+		if (type3 == ToolType.TRASHCAN && type2 == ObsType.TRASH) {
+			return true;
+		}
+		if (type3 == ToolType.HAND && (type2 == ObsType.INVASIVE_PLANT || type2 == ObsType.INVASIVE_ANIMAL)) {
+			return true;
+		}
+		if (type3 == ToolType.CLIPBOARD
+				&& (type2 == ObsType.NON_INVASIVE_PLANT || type2 == ObsType.NON_INVASIVE_ANIMAL)) {
+			return true;
+		}
+		if (type3 == ToolType.RESEARCHER
+				&& (type2 == ObsType.NON_INVASIVE_PLANT || type2 == ObsType.NON_INVASIVE_ANIMAL)) {
+			return true;
+		}
+		if (type3 == ToolType.VIAL && type2 == ObsType.POLLUTION) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

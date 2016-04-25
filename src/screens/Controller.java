@@ -15,7 +15,7 @@ public abstract class Controller implements Renderable, Tickable, MouseListener,
 	public String backgroundPath;
 	protected boolean switchScreen = false;
 	
-	public abstract void onTick();
+	public abstract void onTick(long deltaNs);
 	
 	public abstract void initialize();
 	
