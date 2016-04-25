@@ -26,7 +26,7 @@ public abstract class ObsFun {
 	public static Obstacle makeObs(ObsType type, Position pos, Direction dir){
 		return new Obstacle(type, pos, dir);
 	}
-	
+/*	
 	public static boolean moveAllObs(ArrayList<Obstacle> list) {
 		int count;
 		for (Obstacle obs : list) {
@@ -70,5 +70,5 @@ public abstract class ObsFun {
 		}
 		return false;
 	}
-
+*/
 }

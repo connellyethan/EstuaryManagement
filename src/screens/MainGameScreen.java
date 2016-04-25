@@ -61,8 +61,12 @@ public class MainGameScreen extends Controller {
 		}
 		
 		//Adding Obstacles every n seconds
-		if (totalTime % 3 == 0 && onceCheck){
+		if ((totalTime % 3 == 0 || obstaclesList.size() < 4) && onceCheck){
+			
+			for (int ic = 0; ic <3; ic++){
 			obstaclesList.add(ObsFun.makeObs());
+			}
+			
 			onceCheck = false;
 		}
 
@@ -206,5 +210,8 @@ public class MainGameScreen extends Controller {
 		toolbox.returnTool();
 	}
 
+	public boolean isGameOver() {
+		return gameOver;
+	}
 
 }

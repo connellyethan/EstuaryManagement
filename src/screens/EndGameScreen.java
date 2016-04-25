@@ -21,8 +21,14 @@ public class EndGameScreen extends Controller {
 
 	@Override
 	public ArrayList<RenderInstructions> getRenderInstuctions() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<RenderInstructions> renderBatch = new ArrayList<RenderInstructions>();
+
+		// Draw background
+		RenderInstructions background;
+		background = new RenderInstructions(0, 0, "res/endScreen.png", 100, 100);
+		renderBatch.add(background);
+		
+		return renderBatch;
 	}
 
 	@Override
