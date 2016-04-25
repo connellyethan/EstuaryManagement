@@ -60,8 +60,8 @@ public class MainGameScreen extends Controller {
 			System.out.println("Time Left: " + secondsLeft);
 		}
 		
-		//Adding Obstacles every 5 seconds
-		if (totalTime % 5 == 0 && onceCheck){
+		//Adding Obstacles every n seconds
+		if (totalTime % 3 == 0 && onceCheck){
 			obstaclesList.add(ObsFun.makeObs());
 			onceCheck = false;
 		}
@@ -109,7 +109,7 @@ public class MainGameScreen extends Controller {
 		toolInUse = null;
 		gameOver = false;
 		
-		obstaclesList = ObsFun.setupObs(2);
+		obstaclesList = ObsFun.setupObs(10);
 		
 		health = 50;
 		currentNs = 0;
