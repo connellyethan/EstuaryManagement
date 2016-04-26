@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 public class Position {
 	//Note: position refers to the pixel position of the upper-left hand corner of a given object
 	private double x;
@@ -9,7 +11,10 @@ public class Position {
 		this.x = xPos;
 		this.y = yPos;
 	}
-
+	public static Position getRandom(){
+		Random rand = new Random();
+		return new Position(rand.nextInt(100), rand.nextInt(100));
+	}
 	public double getX() {
 		return x;
 	}

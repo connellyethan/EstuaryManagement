@@ -1,31 +1,28 @@
-
-package main;
+package model;
 
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+import java.util.Scanner;
 import javax.swing.JFrame;
 
-import misc.Preferences;
 import misc.Utilities;
-import model.GameState;
-import screens.Controller;
-import screens.EndGameScreen;
-import screens.MainGameScreen;
 import screens.MenuScreen;
+import screens.Controller;
 import view.PreAlphaView;
 
 public class PreAlphaMain {
 
-	PreAlphaView view;
-	JFrame frame;
-	GameState state;
-	Controller currentScreen;
-	PreAlphaMain game;
+	static PreAlphaView view;
+	static JFrame frame;
+	static GameState state;
+	static Controller currentScreen;
+	static PreAlphaMain game;
 	private long lastTime, now;
 	private final double ticksPerSecond = 60.0;
 	private double nanosPerTick = 1000000000.0 / ticksPerSecond;
-	private long deltaNs = 0;
+	private double deltaNs = 0;
 	public boolean running;
 
 	public PreAlphaMain() {
@@ -34,19 +31,15 @@ public class PreAlphaMain {
 
 	private void initialize() {
 		frame = new JFrame("PreAlpha!");
-		
-		
 		view = new PreAlphaView();
 		DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 		// view.setPreferredSize(new Dimension(dm.getWidth(), dm.getHeight()));
-		Preferences.setWINDOW_WIDTH(900);
-		Preferences.setWINDOW_HEIGHT(600);
-		
-		view.setPreferredSize(new Dimension(Preferences.getWINDOW_WIDTH(), Preferences.getWINDOW_HEIGHT())); //TODO delete
-		Utilities.setWindowHeight(view.getPreferredSize().getHeight(), view.getPreferredSize().getWidth()); //TODO delete
+		view.setPreferredSize(new Dimension(900, 600));
+		Utilities.setWindowHeight(view.getPreferredSize().getHeight(), view.getPreferredSize().getWidth());
 
 		switchStates(GameState.MENU);
-		frame.getContentPane().add(view);
+
+		frame.getContentPane().add(game.view);
 		setFrameProperties();
 
 		running = false;
@@ -76,42 +69,38 @@ public class PreAlphaMain {
 	public void run() {
 		view.requestFocus();
 		lastTime = System.nanoTime();
+		long sum = 0;
+		long count = 1;
 		while (running) {
 			now = System.nanoTime();
 			deltaNs += (now - lastTime);
-			//System.out.println(sum/count);
+			System.out.println(sum/count);
+			sum+=now - lastTime;
+			count++;
 			lastTime = now;
 			if (deltaNs >= nanosPerTick) {
-				onTick(deltaNs);
+				onTick();
 				deltaNs -= nanosPerTick;// possible set it to 0 alternatively,
 				drawScreen(); // depending on certain factors
 			}
 		}
 	}
 
-	public void onTick(long deltaNs2) {
+	public void onTick() {
 		if (state == GameState.MENU) {
-			menuTick(deltaNs2);
+			menuTick();
 		} 
 		else if (state == GameState.IN_GAME) {
-			gameTick(deltaNs2);
+
 		} 
 		else if (state == GameState.END_SCREEN) {
 
 		}
 	}
 
-	private void menuTick(double deltaNs) {
-		if(currentScreen.shouldSwitchScreen()){
-			switchStates(GameState.IN_GAME);
-		}
-	}
-	
-	private void gameTick(long deltaNs){
-		if(((MainGameScreen) currentScreen).isGameOver()){
-			switchStates(GameState.END_SCREEN);
-		}
-		currentScreen.onTick(deltaNs);
+	private void menuTick() {
+		// TODO Auto-generated method stub
+		// None?
 	}
 
 	public void drawScreen() {
@@ -119,7 +108,6 @@ public class PreAlphaMain {
 	}
 	
 	public void switchStates(GameState newState){
-		System.out.println("SWITCHING STATES");
 		if(view.getMouseListeners().length > 0){
 			view.removeMouseListener(currentScreen);
 		}
@@ -127,20 +115,19 @@ public class PreAlphaMain {
 			view.removeMouseMotionListener(currentScreen);
 		}
 		
+		state = newState;
 		
 		if(newState == GameState.MENU){
 			currentScreen = new MenuScreen(); // Sets default screen
 		}
 		else if (newState == GameState.IN_GAME) {
-			currentScreen = new MainGameScreen();
+
 		} 
 		else if (newState == GameState.END_SCREEN) {
-			currentScreen = new EndGameScreen();
+
 		}
-		state = newState;
 		
 		view.addMouseListener(currentScreen);
 		view.addMouseMotionListener(currentScreen);
 	}
-
 }
