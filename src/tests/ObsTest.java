@@ -15,7 +15,7 @@ public class ObsTest {
 	public void test0() {
 		Position pos = new Position(5, 5);
 		Direction dir = Direction.NORTH;
-		Obstacle obs = new Obstacle(ObsType.TRASH, pos, dir);
+		Obstacle obs = new Obstacle(ObsType.TRASH, pos);
 	//	assertEquals(obs.getType(), ObsType.TRASH);
 
 	}

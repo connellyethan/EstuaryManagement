@@ -101,7 +101,7 @@ public class PreAlphaMain {
 		}
 	}
 
-	private void menuTick(double deltaNs) {
+	private void menuTick(long deltaNs) {
 		if(currentScreen.shouldSwitchScreen()){
 			switchStates(GameState.IN_GAME);
 		}

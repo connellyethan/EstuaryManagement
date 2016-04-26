@@ -14,8 +14,12 @@ public class Obstacle implements Renderable, Tickable {
 	private ObsType type;
 	
 	private double velocity;
-	private Direction direction;
+	private double theta;
 	private Position position;
+	private final double NORTH = 270.0;
+	private final double SOUTH = 90.0;
+	private final double EAST = 0.0;
+	private final double WEST = 180.0;
 	
 	private long lifeSpan;
 	private long timeElapsed;
@@ -30,10 +34,9 @@ public class Obstacle implements Renderable, Tickable {
 	private RectangleBound renderBounds;
 	private RectangleBound hitBoxBounds;
 
-	public Obstacle(ObsType type, Position pos, Direction dir) {
+	public Obstacle(ObsType type, Position pos) {
 		this.type = type;
-		velocity = .3;
-		direction = dir;
+		velocity = .8;
 		position = pos;
 		renderWidth = 10;
 		renderHeight = 10;
@@ -41,6 +44,7 @@ public class Obstacle implements Renderable, Tickable {
 		onToolMatch = 5;
 		onToolMisMatch = -5;
 		timeElapsed = 0;
+		theta = NORTH + 40;
 		lifeSpan = Utilities.NANOS_PER_SECOND * 6;
 	}
 
@@ -76,30 +80,20 @@ public class Obstacle implements Renderable, Tickable {
 	}
 
 	public void move() {
-		if (direction == Direction.EAST) {
-			position.addX(velocity);
-		}
-		else if (direction == Direction.WEST) {
-			position.addX(-1 * velocity);
-		}
-		else if (direction == Direction.SOUTH) {
-			position.addY(velocity);
-		}
-		if (direction == Direction.NORTH) {
-			position.addY(-1 * velocity);
-		}
+		position.addX(velocity * Math.cos(Math.toRadians(theta)));
+		position.addY(velocity * Math.sin(Math.toRadians(theta)));
 		
 		if(getPosition().getX() > 100 - getRenderWidth()){
-			setDirection(Direction.WEST);
+			setTheta(WEST);
 		}
 		else if(getPosition().getX() < 0){
-			setDirection(Direction.EAST);
+			setTheta(EAST);
 		}
 		else if(getPosition().getY() < 0){
-			setDirection(Direction.SOUTH);
+			setTheta(SOUTH);
 		}
 		else if(getPosition().getY() > 100 - getRenderHeight()){
-			setDirection(Direction.NORTH);
+			setTheta(NORTH);
 		}
 	}
 
@@ -151,13 +145,7 @@ public class Obstacle implements Renderable, Tickable {
 		this.velocity = velocity;
 	}
 
-	public Direction getDirection() {
-		return direction;
-	}
 
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
 
 	public Position getPosition() {
 		return position;
@@ -182,6 +170,14 @@ public class Obstacle implements Renderable, Tickable {
 	public double getDeathValue() {
 		return deathValue;
 		// TODO Auto-generated method stub
+	}
+
+	public double getTheta() {
+		return theta;
+	}
+
+	public void setTheta(double theta) {
+		this.theta = theta;
 	}
 
 }

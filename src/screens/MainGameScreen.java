@@ -38,7 +38,7 @@ public class MainGameScreen extends Controller {
 		mouseDown = false;
 		toolInUse = null;
 		gameOver = false;
-		obs = new Obstacle(ObsType.TRASH, new Position(50, 50), Direction.WEST);
+		obs = new Obstacle(ObsType.TRASH, new Position(50, 50));
 		
 		obstaclesList = new ArrayList<Obstacle>();
 		obstaclesList.add(obs);
