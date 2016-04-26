@@ -35,15 +35,18 @@ public class MainGameScreen extends Controller {
 	public final static double toolWidth = 10;
 	public final static double toolHeight = 10;
 
+	
+	public boolean shouldSwitchScreen(){
+		return secondsLeft < 0;
+	}
 	public MainGameScreen() {
-<<<<<<< HEAD
 		mouseDown = false;
 		toolInUse = null;
 		gameOver = false;
-		obs = new Obstacle(ObsType.TRASH, new Position(50, 50));
+	//	obs = new Obstacle(ObsType.TRASH, new Position(50, 50));
 		
 		obstaclesList = new ArrayList<Obstacle>();
-		obstaclesList.add(obs);
+	//	obstaclesList.add(obs);
 		
 		health = 50;
 		currentNs = 0;
@@ -52,15 +55,13 @@ public class MainGameScreen extends Controller {
 
 		Position toolBoxPosition = new Position(10, 90);
 		toolbox = new ToolBox();
-=======
 		initialize();
->>>>>>> 974a7a0ab4997cfbfd89f8406c1c3156a3df7be3
 	}
 
 	@Override
 	public void onTick(long deltaNs) {
 		if (gameOver) {
-			return;
+		//	return;
 		}
 
 		// Takes care of time
@@ -226,10 +227,6 @@ public class MainGameScreen extends Controller {
 		mouseDown = false;
 		toolInUse = null;
 		toolbox.returnTool();
-	}
-
-	public boolean isGameOver() {
-		return gameOver;
 	}
 
 }

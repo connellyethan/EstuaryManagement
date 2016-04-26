@@ -35,8 +35,11 @@ public class Obstacle implements Renderable, Tickable {
 	private RectangleBound hitBoxBounds;
 
 	public Obstacle(ObsType type, Position pos) {
+		this(type,pos, 0);
+	}
+	public Obstacle(ObsType type, Position pos, double theta){
 		this.type = type;
-		velocity = .8;
+		velocity = .4;
 		position = pos;
 		renderWidth = 10;
 		renderHeight = 10;
@@ -44,7 +47,7 @@ public class Obstacle implements Renderable, Tickable {
 		onToolMatch = 5;
 		onToolMisMatch = -5;
 		timeElapsed = 0;
-		theta = NORTH + 40;
+		this.theta = theta;
 		lifeSpan = Utilities.NANOS_PER_SECOND * 6;
 	}
 

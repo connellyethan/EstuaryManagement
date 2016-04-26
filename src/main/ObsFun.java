@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import model.Direction;
 import model.ObsType;
@@ -18,13 +19,15 @@ public abstract class ObsFun {
 	}
 
 	public static Obstacle makeObs() {
+		Random rand = new Random();
 		Position pos = Position.getRandom();
 		Direction dir = Direction.getRandom();
-		return new Obstacle(ObsType.getRandom(), pos, dir);
+		double theta = rand.nextDouble() * 360;
+		return new Obstacle(ObsType.getRandom(), pos, theta);
 	}
 	
-	public static Obstacle makeObs(ObsType type, Position pos, Direction dir){
-		return new Obstacle(type, pos, dir);
+	public static Obstacle makeObs(ObsType type, Position pos, double theta){
+		return new Obstacle(type, pos, theta);
 	}
 /*	
 	public static boolean moveAllObs(ArrayList<Obstacle> list) {
