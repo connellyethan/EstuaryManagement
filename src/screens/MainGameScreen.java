@@ -2,7 +2,9 @@ package screens;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
+import main.ObsFun;
 import misc.Preferences;
 import misc.RectangleBound;
 import model.Direction;
@@ -14,8 +16,6 @@ import view.RenderInstructions;
 
 public class MainGameScreen extends Controller {
 
-	private Obstacle obs; // Delete later
-
 	private double timeLeft;
 	private boolean mouseDown;
 	private double health;
@@ -26,6 +26,7 @@ public class MainGameScreen extends Controller {
 
 	private long currentNs;
 	private int secondsLeft;
+	private int totalTime;
 	private boolean gameOver;
 
 	private final double NANOS_PER_SECOND = 1000000000.0;
@@ -35,6 +36,7 @@ public class MainGameScreen extends Controller {
 	public final static double toolHeight = 10;
 
 	public MainGameScreen() {
+<<<<<<< HEAD
 		mouseDown = false;
 		toolInUse = null;
 		gameOver = false;
@@ -50,24 +52,40 @@ public class MainGameScreen extends Controller {
 
 		Position toolBoxPosition = new Position(10, 90);
 		toolbox = new ToolBox();
+=======
+		initialize();
+>>>>>>> 974a7a0ab4997cfbfd89f8406c1c3156a3df7be3
 	}
 
 	@Override
 	public void onTick(long deltaNs) {
 		if (gameOver) {
-			// return;
+			return;
 		}
 
 		// Takes care of time
+		boolean onceCheck = false;
 		currentNs += deltaNs;
 		if (currentNs >= NANOS_PER_SECOND) {
 			currentNs -= NANOS_PER_SECOND;
 			secondsLeft--;
+			totalTime++; //counts the total time for Obstacle addition
+			onceCheck = true;
 			if (secondsLeft <= 0) {
 				gameOver = true;
 			}
 			System.out.println("Health is " + health);
 			System.out.println("Time Left: " + secondsLeft);
+		}
+		
+		//Adding Obstacles every n seconds
+		if ((totalTime % 3 == 0 || obstaclesList.size() < 4) && onceCheck){
+			
+			for (int ic = 0; ic <3; ic++){
+			obstaclesList.add(ObsFun.makeObs());
+			}
+			
+			onceCheck = false;
 		}
 
 		// On tick and move
@@ -80,6 +98,9 @@ public class MainGameScreen extends Controller {
 			// Obstacles vanish if they're on screen for too long
 			if (currentObstacle.lifetimeOver()) { 
 				health += currentObstacle.getDeathValue();
+				if (health <= 0){
+					gameOver = true;
+				}
 				obstaclesList.remove(i);
 				i--; // TODO check for errors in array shifting.
 				continue;
@@ -106,7 +127,20 @@ public class MainGameScreen extends Controller {
 
 	@Override
 	public void initialize() {
+		mouseDown = false;
+		toolInUse = null;
+		gameOver = false;
+		
+		obstaclesList = ObsFun.setupObs(10);
+		
+		health = 50;
+		currentNs = 0;
+		secondsLeft = NUM_SECONDS;
+		timeLeft = NUM_SECONDS * NANOS_PER_SECOND;
+		totalTime = 0;
 
+		Position toolBoxPosition = new Position(10, 90);
+		toolbox = new ToolBox();
 	}
 
 	@Override
@@ -194,5 +228,8 @@ public class MainGameScreen extends Controller {
 		toolbox.returnTool();
 	}
 
+	public boolean isGameOver() {
+		return gameOver;
+	}
 
 }

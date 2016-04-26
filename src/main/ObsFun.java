@@ -9,14 +9,16 @@ import model.Position;
 
 public abstract class ObsFun {
 
-	public static void setupObs(int initObs, int width, int height) {
+	public static ArrayList<Obstacle> setupObs(int initObs) {
+		ArrayList<Obstacle> data = new ArrayList<Obstacle>();
 		for (int i = 0; i < initObs; i++) {
-			makeObs(width, height);
+			data.add(makeObs());
 		}
+		return data;
 	}
 
-	public static Obstacle makeObs(int width, int height) {
-		Position pos = Position.getRandom(width, height);
+	public static Obstacle makeObs() {
+		Position pos = Position.getRandom();
 		Direction dir = Direction.getRandom();
 		return new Obstacle(ObsType.getRandom(), pos, dir);
 	}
@@ -24,7 +26,7 @@ public abstract class ObsFun {
 	public static Obstacle makeObs(ObsType type, Position pos, Direction dir){
 		return new Obstacle(type, pos, dir);
 	}
-	
+/*	
 	public static boolean moveAllObs(ArrayList<Obstacle> list) {
 		int count;
 		for (Obstacle obs : list) {
@@ -68,5 +70,5 @@ public abstract class ObsFun {
 		}
 		return false;
 	}
-
+*/
 }
