@@ -8,7 +8,7 @@ import misc.Renderable;
 import screens.MainGameScreen;
 import view.RenderInstructions;
 
-public class Tool implements Renderable {
+public class Tool {
 	
 	private Position position;
 	private ToolType type;
@@ -69,34 +69,5 @@ public class Tool implements Renderable {
 		this.position = new Position(pos.getX() - xOffset, pos.getY() - yOffset);
 	}
 
-	@Override
-	public ArrayList<RenderInstructions> getRenderInstuctions() {
-		ArrayList<RenderInstructions> renderBatch = new ArrayList<RenderInstructions>();
-		String toolImagePath = "";
-		
-		
-		if(type == ToolType.TRASHCAN){
-			toolImagePath = "res/trashcan.png";
-		}
-		else if(type == ToolType.HAND){
-			toolImagePath = "res/hand.png";
-		}
-		else if(type == ToolType.RESEARCHER){
-			toolImagePath = "res/researcher.png";
-		}
-		else if(type == ToolType.CLIPBOARD){
-			toolImagePath = "res/clipboard.png";
-		}
-		else if(type == ToolType.VIAL){
-			toolImagePath = "res/vial.png";
-		}
-		
-		
-		RenderInstructions toolRender = new RenderInstructions(position.getX(), position.getY(), toolImagePath, toolheight, toolwidth);
-		renderBatch.add(toolRender);
-		
-		return renderBatch;
-	}
-	
 
 }

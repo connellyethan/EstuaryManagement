@@ -12,6 +12,8 @@ import model.ObsType;
 import model.Obstacle;
 import model.Position;
 import model.Tool;
+import model.ToolBox;
+import model.ToolType;
 import view.RenderInstructions;
 
 public class MainGameScreen extends Controller {
@@ -57,7 +59,7 @@ public class MainGameScreen extends Controller {
 	@Override
 	public void onTick(long deltaNs) {
 		if (gameOver) {
-		//	return;
+			return;
 		}
 
 		// Takes care of time
@@ -152,17 +154,17 @@ public class MainGameScreen extends Controller {
 		// Draw enemies
 		ArrayList<RenderInstructions> enemies = new ArrayList<RenderInstructions>();
 		for (Obstacle obs : obstaclesList) {
-			enemies.addAll(getObsRenderInstuctions(obs));
+			enemies.addAll(getObsRenderInstructions(obs));
 		}
 		renderBatch.addAll(enemies);
 
 		// Draw toolbox
-		ArrayList<RenderInstructions> toolboxRender = toolbox.getRenderInstuctions();
+		ArrayList<RenderInstructions> toolboxRender = getToolBoxRenderInstructions(toolbox); 
 		renderBatch.addAll(toolboxRender);
 
 		// Draw tool in hand
 		if (toolInUse != null) {
-			renderBatch.addAll(toolInUse.getRenderInstuctions());
+			renderBatch.addAll(getToolRenderInstructions(toolInUse));
 		}
 
 		// Draw Timer
@@ -227,7 +229,7 @@ public class MainGameScreen extends Controller {
 	public boolean isGameOver() {
 		return gameOver;
 	}
-	public ArrayList<RenderInstructions> getObsRenderInstuctions(Obstacle obs) {
+	public ArrayList<RenderInstructions> getObsRenderInstructions(Obstacle obs) {
 		ArrayList<RenderInstructions> renderBatch = new ArrayList<RenderInstructions>();
 
 		if (obs.getType() == ObsType.TRASH) {
@@ -253,6 +255,68 @@ public class MainGameScreen extends Controller {
 		if (obs.getType() == ObsType.POLLUTION) {
 			renderBatch.add(new RenderInstructions(obs.getPosition().getX(), obs.getPosition().getY(), "res/pollution.png", obs.getRenderWidth(),
 					obs.getRenderHeight()));
+		}
+		
+		return renderBatch;
+	}
+	
+	public ArrayList<RenderInstructions> getToolRenderInstructions(Tool tool) {
+		ArrayList<RenderInstructions> renderBatch = new ArrayList<RenderInstructions>();
+		String toolImagePath = "";
+		
+		
+		if(tool.getType() == ToolType.TRASHCAN){
+			toolImagePath = "res/trashcan.png";
+		}
+		else if(tool.getType() == ToolType.HAND){
+			toolImagePath = "res/hand.png";
+		}
+		else if(tool.getType() == ToolType.RESEARCHER){
+			toolImagePath = "res/researcher.png";
+		}
+		else if(tool.getType() == ToolType.CLIPBOARD){
+			toolImagePath = "res/clipboard.png";
+		}
+		else if(tool.getType() == ToolType.VIAL){
+			toolImagePath = "res/vial.png";
+		}
+		
+		
+		RenderInstructions toolRender = new RenderInstructions(tool.getPosition().getX(), tool.getPosition().getY(), toolImagePath, tool.getToolHeight(), tool.getToolWidth());
+		renderBatch.add(toolRender);
+		
+		return renderBatch;
+	}
+	
+	public ArrayList<RenderInstructions> getToolBoxRenderInstructions(ToolBox box) {
+		ArrayList<RenderInstructions> renderBatch = new ArrayList<RenderInstructions>();
+
+		double toolBoxX = box.getToolboxPosition().getX();
+		double toolBoxY = box.getToolboxPosition().getY();
+		RenderInstructions toolboxBar = new RenderInstructions(toolBoxX, toolBoxY, "res/toolbox.png",
+				box.getRenderHeight(), box.getRenderWidth());
+		renderBatch.add(toolboxBar);
+		
+		RenderInstructions toolInstructions;
+		if(box.getToolOut() != ToolType.TRASHCAN){
+			toolInstructions = new RenderInstructions(toolBoxX,toolBoxY, "res/trashcan.png", box.getRenderHeight(), box.getRenderWidth()/5);
+			renderBatch.add(toolInstructions);
+		}
+		if(box.getToolOut() != ToolType.HAND){
+			toolInstructions = new RenderInstructions(toolBoxX + (box.getRenderWidth()/5),toolBoxY, "res/hand.png", box.getRenderHeight(), box.getRenderWidth()/5);
+			renderBatch.add(toolInstructions);
+		}
+		if(box.getToolOut() != ToolType.RESEARCHER){
+			toolInstructions = new RenderInstructions(toolBoxX + ((2 * box.getRenderWidth())/5),toolBoxY, "res/researcher.png", box.getRenderHeight(), box.getRenderWidth()/5);
+			renderBatch.add(toolInstructions);
+		}
+		if(box.getToolOut() != ToolType.CLIPBOARD){
+			toolInstructions = new RenderInstructions(toolBoxX + ((3 * box.getRenderWidth())/5),toolBoxY, "res/clipboard.png", box.getRenderHeight(), box.getRenderWidth()/5);
+			renderBatch.add(toolInstructions);
+		}
+		if(box.getToolOut() != ToolType.VIAL){
+			toolInstructions = new RenderInstructions(toolBoxX + ((4 * box.getRenderWidth())/5),toolBoxY, "res/vial.png", box.getRenderHeight(), box.getRenderWidth()/5);
+			renderBatch.add(toolInstructions);
 		}
 		
 		return renderBatch;
