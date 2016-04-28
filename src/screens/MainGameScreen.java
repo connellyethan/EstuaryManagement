@@ -43,11 +43,7 @@ public class MainGameScreen extends Controller {
 		mouseDown = false;
 		toolInUse = null;
 		gameOver = false;
-	//	obs = new Obstacle(ObsType.TRASH, new Position(50, 50));
-		
 		obstaclesList = new ArrayList<Obstacle>();
-	//	obstaclesList.add(obs);
-		
 		health = 50;
 		currentNs = 0;
 		secondsLeft = NUM_SECONDS;
@@ -227,6 +223,9 @@ public class MainGameScreen extends Controller {
 		mouseDown = false;
 		toolInUse = null;
 		toolbox.returnTool();
+	}
+	public boolean isGameOver() {
+		return gameOver;
 	}
 
 }

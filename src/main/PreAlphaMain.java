@@ -108,7 +108,7 @@ public class PreAlphaMain {
 	}
 	
 	private void gameTick(long deltaNs){
-		if(currentScreen.shouldSwitchScreen()){
+		if(((MainGameScreen) currentScreen).isGameOver()){
 			switchStates(GameState.END_SCREEN);
 		}
 		currentScreen.onTick(deltaNs);
